@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from typing import List, Tuple
 
 
-def make_pts(N: int) -> list[Tuple[float, float]]:
-    """Make N random points in the unit square."""
+def make_pts(N):
     X = []
     for i in range(N):
         x_1 = random.random()
@@ -21,8 +20,7 @@ class Graph:
     y: List[int]
 
 
-def simple(N: int) -> Graph:
-    """A simple dataset where x_1 < 0.5 is class 1 else class 0."""
+def simple(N):
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -31,8 +29,7 @@ def simple(N: int) -> Graph:
     return Graph(N, X, y)
 
 
-def diag(N: int) -> Graph:
-    """A simple dataset where x_1 + x_2 < 0.5 is class 1 else class 0."""
+def diag(N):
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -41,8 +38,7 @@ def diag(N: int) -> Graph:
     return Graph(N, X, y)
 
 
-def split(N: int) -> Graph:
-    """A simple dataset where x_1 < 0.2 or x_1 > 0.8 is class 1 else class 0."""
+def split(N):
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -51,8 +47,7 @@ def split(N: int) -> Graph:
     return Graph(N, X, y)
 
 
-def xor(N: int) -> Graph:
-    """A simple dataset where x_1 < 0.5 and x_2 > 0.5 or x_1 > 0.5 and x_2 < 0.5 is class 1 else class 0."""
+def xor(N):
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -61,8 +56,7 @@ def xor(N: int) -> Graph:
     return Graph(N, X, y)
 
 
-def circle(N: int) -> Graph:
-    """A simple dataset where (x_1 - 0.5)^2 + (x_2 - 0.5)^2 > 0.1 is class 1 else class 0."""
+def circle(N):
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -72,32 +66,20 @@ def circle(N: int) -> Graph:
     return Graph(N, X, y)
 
 
-def spiral(N: int) -> Graph:
-    """A simple dataset where points in two interlocking spirals are class 0 and 1."""
+def spiral(N):
 
-    def x(t: float) -> float:
+    def x(t):
         return t * math.cos(t) / 20.0
 
-    def y(t: float) -> float:
+    def y(t):
         return t * math.sin(t) / 20.0
-
-    X = [
-        (x(10.0 * (float(i) / (N // 2))) + 0.5, y(10.0 * (float(i) / (N // 2))) + 0.5)
-        for i in range(5 + 0, 5 + N // 2)
-    ]
-    X = X + [
-        (y(-10.0 * (float(i) / (N // 2))) + 0.5, x(-10.0 * (float(i) / (N // 2))) + 0.5)
-        for i in range(5 + 0, 5 + N // 2)
-    ]
+    X = [(x(10.0 * (float(i) / (N // 2))) + 0.5, y(10.0 * (float(i) / (N //
+        2))) + 0.5) for i in range(5 + 0, 5 + N // 2)]
+    X = X + [(y(-10.0 * (float(i) / (N // 2))) + 0.5, x(-10.0 * (float(i) /
+        (N // 2))) + 0.5) for i in range(5 + 0, 5 + N // 2)]
     y2 = [0] * (N // 2) + [1] * (N // 2)
     return Graph(N, X, y2)
 
 
-datasets = {
-    "Simple": simple,
-    "Diag": diag,
-    "Split": split,
-    "Xor": xor,
-    "Circle": circle,
-    "Spiral": spiral,
-}
+datasets = {'Simple': simple, 'Diag': diag, 'Split': split, 'Xor': xor,
+    'Circle': circle, 'Spiral': spiral}
